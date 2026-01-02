@@ -37,16 +37,13 @@ async def main():
    async def main():
     app = web.Application()
 
-    # Register webhook handler
     webhook_handler = SimpleRequestHandler(dispatcher=dp, bot=bot)
     webhook_handler.register(app, path=WEBHOOK_PATH)
 
     setup_application(app, dp, bot=bot)
 
-    # IMPORTANT: Tell Telegram your webhook URL
-    await bot.set_webhook(f"https://telegram-ai-bot-fyak.onrender.com{WEBHOOK_PATH}")
-
     return app
+
 
 
 if __name__ == "__main__":
