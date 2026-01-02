@@ -13,7 +13,7 @@ WEBHOOK_PATH = "https://telegram-ai-bot-fyak.onrender.com/webhook"
 if not BOT_TOKEN or not GROQ_KEY:
     raise RuntimeError("Missing TELEGRAM_BOT_TOKEN or GROQ_API_KEY")
 
-bot = Bot(token=BOT_TOKEN)
+bot = Bot(token=TELEGRAM_BOT_TOKEN)
 dp = Dispatcher()
 groq = AsyncGroq(api_key=GROQ_KEY)
 
