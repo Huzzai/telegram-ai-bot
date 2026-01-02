@@ -34,6 +34,7 @@ async def reply(message: Message):
         await message.answer(f"Error: {str(e)[:200]}")
 
 async def main():
+   async def main():
     app = web.Application()
 
     # Register webhook handler
@@ -42,7 +43,11 @@ async def main():
 
     setup_application(app, dp, bot=bot)
 
+    # IMPORTANT: Tell Telegram your webhook URL
+    await bot.set_webhook(f"https://telegram-ai-bot-fyak.onrender.com{WEBHOOK_PATH}")
+
     return app
+
 
 if __name__ == "__main__":
     web.run_app(main(), host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
