@@ -23,12 +23,12 @@ async def start(message: Message):
 
 @dp.message()
 async def reply(message: Message):
-    try:
-        resp = await groq.chat.completions.create(
-            model="llama-3.1-8b-instant",
-            messages=[{"role": "user", "content": message.text}],
-            max_tokens=300
-        )
+      resp = await groq.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+       messages=[{"role": "user", "content": message.text}],
+       max_tokens=300
+)
+
         await message.answer(resp.choices[0].message.content[:4000])
     except Exception as e:
         await message.answer(f"Error: {str(e)[:200]}")
