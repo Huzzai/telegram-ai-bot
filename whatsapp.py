@@ -3,16 +3,15 @@ from aiohttp import web
 from aiogram import Bot, Dispatcher
 from aiogram.types import Message
 from aiogram.filters import Command
-from aiogram.webhook.aiohttp_server import SimpleWebhookApp
+from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 from groq import AsyncGroq
 
-# Get secrets from Render environment
-BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 GROQ_KEY = os.getenv("GROQ_API_KEY")
 WEBHOOK_PATH = "/webhook"
 
 if not BOT_TOKEN or not GROQ_KEY:
-    raise RuntimeError("❌ Missing TELEGRAM_BOT_TOKEN or GROQ_API_KEY")
+    raise RuntimeError("Missing TELEGRAM_BOT_TOKEN or GROQ_API_KEY")
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
@@ -20,7 +19,7 @@ groq = AsyncGroq(api_key=GROQ_KEY)
 
 @dp.message(Command("start"))
 async def start(message: Message):
-    await message.answer("Hi! I'm running on Groq + Llama 3.1.")
+    await message.answer("Bot online — Groq + Aiogram v3 running.")
 
 @dp.message()
 async def reply(message: Message):
@@ -32,15 +31,8 @@ async def reply(message: Message):
         )
         await message.answer(resp.choices[0].message.content[:4000])
     except Exception as e:
-        await message.answer(f"❌ Error: {str(e)[:150]}")
+        await message.answer(f"Error: {str(e)[:200]}")
 
-if __name __ == "__main__":
-    # Create webhook app
-    app = SimpleWebhookApp(
-        dispatcher=dp,
-        bot=bot,
-        webhook_path=WEBHOOK_PATH
-    )
-    # Render provides PORT automatically
-    port = int(os.getenv("PORT", 8000))
-    web.run_app(app, host="0.0.0.0", port=port)
+async def main():
+    app = web.Application()
+
