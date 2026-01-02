@@ -8,7 +8,7 @@ from groq import AsyncGroq
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 GROQ_KEY = os.getenv("GROQ_API_KEY")
-WEBHOOK_PATH = "/webhook"
+WEBHOOK_PATH = "https://telegram-ai-bot-fyak.onrender.com/webhook"
 
 if not BOT_TOKEN or not GROQ_KEY:
     raise RuntimeError("Missing TELEGRAM_BOT_TOKEN or GROQ_API_KEY")
