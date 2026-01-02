@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 # Environment
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-WEBHOOK_HOST = os.getenv("WEBHOOK_HOST")  # e.g., https://your-bot.onrender.com
+WEBHOOK_HOST = os.getenv("https://dashboard.render.com/web/srv-d5bnmj6r433s73936l0g/deploys/dep-d5bnmjer433s73936l6g")  # e.g., https://your-bot.onrender.com
 WEBHOOK_PATH = "/webhook"
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 PORT = int(os.getenv("PORT", 10000))
