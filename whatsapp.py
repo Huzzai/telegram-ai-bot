@@ -8,7 +8,7 @@ from groq import AsyncGroq
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 GROQ_KEY = os.getenv("GROQ_API_KEY")
-WEBHOOK_PATH = "/webhook"
+WEBHOOK_PATH = "/webhook"   # <-- FIXED
 
 if not TELEGRAM_BOT_TOKEN or not GROQ_KEY:
     raise RuntimeError("Missing TELEGRAM_BOT_TOKEN or GROQ_API_KEY")
@@ -36,3 +36,13 @@ async def reply(message: Message):
 async def main():
     app = web.Application()
 
+    # Register webhook handler
+    webhook_handler = SimpleRequestHandler(dispatcher=dp, bot=bot)
+    webhook_handler.register(app, path=WEBHOOK_PATH)
+
+    setup_application(app, dp, bot=bot)
+
+    return app
+
+if __name__ == "__main__":
+    web.run_app(main(), host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
